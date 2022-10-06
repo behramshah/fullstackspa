@@ -1,16 +1,15 @@
-import React from "react";
-import { useQuery } from 'react-query';
 import {
-    Table,
     Thead,
-    Tbody,
     Tr,
     Th,
     Td,
-    TableCaption,
+    Table,
+    Tbody,
     TableContainer,
-  } from '@chakra-ui/react';
-  import axiosInstance from '../axios';
+} from '@chakra-ui/react';
+import React from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import axiosInstance from '../axios';
 
 
   const getUsers = async () => {
@@ -18,14 +17,19 @@ import {
     return response.data;
     };
 
+    const queryClient = new QueryClient()
+
 
 
 const Users = () => {
 
     const users = useQuery('users', getUsers);
 
+    
+
     return(
         <>
+        <QueryClientProvider client={ queryClient }>
             <TableContainer>
                 <Table variant='simple'>
                     <Thead>
@@ -41,10 +45,10 @@ const Users = () => {
                            users && users.map( user => (
                             <>
                                 <Tr>
-                                    <Td>{user.firstname}</Td>
-                                    <Td>{user.lastname}</Td>
-                                    <Td>{user.birthdate}</Td>
-                                    <Td>{user.email}</Td>
+                                    <Td>{ user.firstname }</Td>
+                                    <Td>{ user.lastname }</Td>
+                                    <Td>{ user.birthdate }</Td>
+                                    <Td>{ user.email }</Td>
                                 </Tr>
                             </>
                            ) 
@@ -53,6 +57,7 @@ const Users = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
+            </QueryClientProvider>
         </>
     )
 }
