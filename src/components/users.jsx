@@ -8,7 +8,7 @@ import {
     TableContainer,
 } from '@chakra-ui/react';
 import React from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import axiosInstance from '../axios';
 
 
@@ -17,19 +17,18 @@ import axiosInstance from '../axios';
     return response.data;
     };
 
-    const queryClient = new QueryClient()
+    
 
 
 
 const Users = () => {
 
-    const users = useQuery('users', getUsers);
+    let users = [];    
 
-    
+    //users = useQuery('users', getUsers)
 
     return(
-        <>
-        <QueryClientProvider client={ queryClient }>
+        <>    
             <TableContainer>
                 <Table variant='simple'>
                     <Thead>
@@ -57,7 +56,6 @@ const Users = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
-            </QueryClientProvider>
         </>
     )
 }
